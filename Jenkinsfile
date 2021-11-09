@@ -66,7 +66,7 @@ pipeline {
 			}
 		}
 		
-		stage ('Get Pod's status') {
+		stage ('Get Pods status') {
 			steps {
 			sh 'kubectl get pods'
 			}
