@@ -21,7 +21,7 @@ pipeline {
 		stage ('Check GKE Connection') {
 			steps {
 			sh 'gcloud container clusters get-credentials gcp-grp-cluster01  --zone "us-central1-c" '
-			sh 'sleep 120'
+			sh 'sleep 10'
 			}
 		}
 		
