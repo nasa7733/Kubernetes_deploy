@@ -7,7 +7,7 @@ pipeline {
 	stages {
 		stage ('Checkout') {
 			steps {
-			git branch : 'master' , url: 'https://github.com/ishaqmdgcp/nexus.git'
+			git branch : 'master' , url: 'https://github.com/nasa7733/kuberenetes_deploy.git'
 
 			}
 		}
