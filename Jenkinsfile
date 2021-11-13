@@ -60,42 +60,42 @@ pipeline {
 			sh 'sleep 1'
 			}
 		}
-		stage ('Create a Deployment') {
-			steps {
-			sh 'kubectl apply -f deploy.yaml'
-			sh 'sleep 120'
-			}
-		}
+	//	stage ('Create a Deployment') {
+	//		steps {
+	//		sh 'kubectl apply -f deploy.yaml'
+	//		sh 'sleep 120'
+	//		}
+	//	}
 		
 		
-		stage ("Get Pod's status") {
-			steps {
-			sh 'kubectl get pods'
-			}
-		}
+	//	stage ("Get Pod's status") {
+	//		steps {
+	//		sh 'kubectl get pods'
+	//		}
+	//	}
 	 
-		stage ('Exposing the App') {
-			steps {
-			sh 'kubectl expose deployment webapp-deployment --name=web-app-service --type=LoadBalancer --port 80 --target-port 8081'
-			sh 'sleep 120'
-			}
-		}
-		stage ('Get service details'){
-			steps {
-			sh 'kubectl get service'
-			}
-		}
-		
-		 stage ('TEST the Application'){
-			steps {
-			sh """
-		    #!/bin/bash
-			cluster_ip=\$(kubectl describe svc/web-app-service | grep "LoadBalancer Ingress:" | awk '{print \$3}')
-			echo "this is cluster Ip \$cluster_ip "
-			curl http://\$cluster_ip/health
-			"""
-			}
-		}
+	//	stage ('Exposing the App') {
+	//		steps {
+	//		sh 'kubectl expose deployment webapp-deployment --name=web-app-service --type=LoadBalancer --port 80 --target-port 8081'
+	//		sh 'sleep 120'
+	//		}
+	//	}
+	//	stage ('Get service details'){
+	//		steps {
+	//		sh 'kubectl get service'
+	//		}
+	//	}
+	//	
+	//	 stage ('TEST the Application'){
+	//		steps {
+	//		sh """
+	//	    #!/bin/bash
+	//		cluster_ip=\$(kubectl describe svc/web-app-service | grep "LoadBalancer Ingress:" | awk '{print \$3}')
+	//		echo "this is cluster Ip \$cluster_ip "
+	//		curl http://\$cluster_ip/health
+	//		"""
+	//		}
+	//	}
 		
 		stage ('Delete the GKE Cluster ENV'){
 			steps {
