@@ -1,7 +1,5 @@
 pipeline {
  agent any 
-
-
 	stages {
 		
 		stage ('Create GKE Cluster') {
@@ -17,11 +15,9 @@ pipeline {
 				--no-enable-master-authorized-networks --addons HorizontalPodAutoscaling,HttpLoadBalancing \
 				--no-enable-autoupgrade --no-enable-autorepair --max-surge-upgrade 1 \
 				--max-unavailable-upgrade 0 --enable-shielded-nodes --no-shielded-integrity-monitoring --tags "http" --node-locations "us-central1-c" """
-	    	}
+	    		}
 		} 	
 		
-		
-		}
 		stage ('Check GKE Connection') {
 			steps {
 			sh 'gcloud container clusters get-credentials gcp-grp-cluster01  --zone "us-central1-c" '
