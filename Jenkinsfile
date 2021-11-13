@@ -69,7 +69,7 @@ pipeline {
 		stage ('Exposing the App') {
 			steps {
 			sh 'kubectl expose deployment webapp-deployment --name=web-app-service --type=LoadBalancer --port 80 --target-port 8081'
-			sh 'sleep 10'
+			sh 'sleep 120'
 			}
 		}
 		stage ('Get service details'){
