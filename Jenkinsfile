@@ -33,11 +33,11 @@ pipeline {
 		}
 		stage ('Create GKE Cluster') {
 			steps {
-			sh """ gcloud  container --project "midevops" clusters create "nasa-01" --zone "us-central1-c" \
+			sh """ gcloud  container --project "midevops" clusters create "gcp-grp-cluster01" --zone "us-central1-c" \
 				--no-enable-basic-auth --cluster-version "1.20.10-gke.1600" --release-channel "None" \
 				--machine-type "g1-small" --image-type "COS_CONTAINERD" --disk-type "pd-standard"  \
 				--disk-size "100" --metadata disable-legacy-endpoints=true \
-				--max-pods-per-node "10" --num-nodes "2" --enable-ip-alias \
+				--max-pods-per-node "10" --num-nodes "1" --enable-ip-alias \
 				--network "projects/midevops/global/networks/default" \
 				--subnetwork "projects/midevops/regions/us-central1/subnetworks/default" \
 				--no-enable-intra-node-visibility --default-max-pods-per-node "110" \
@@ -48,25 +48,19 @@ pipeline {
 		} 	
 		stage ('Check GKE Connection') {
 			steps {
-			sh 'gcloud container clusters get-credentials nasa-01  --zone "us-central1-c" '
+			sh 'gcloud container clusters get-credentials gcp-grp-cluster01  --zone "us-central1-c" '
 			sh 'sleep 120'
 			}
 		}
 		stage ('Create a Deployment') {
 			steps {
-			sh 'kubectl create deployment web-app --image=gcr.io/midevops/webapp:dev01'
+			sh 'kubectl apply -f ./deploy.yaml'
 			sh 'sleep 120'
 			}
 		}
 		
-		stage ('Scale POD replicas') {
-			steps {
-			sh 'kubectl scale deployment web-app --replicas=3'
-			sh 'sleep 120'
-			}
-		}
 		
-		stage ('Get Pods status') {
+		stage ('Get Pod's status') {
 			steps {
 			sh 'kubectl get pods'
 			}
@@ -74,7 +68,7 @@ pipeline {
 	 
 		stage ('Exposing the App') {
 			steps {
-			sh 'kubectl expose deployment web-app --name=web-app-service --type=LoadBalancer --port 80 --target-port 8080'
+			sh 'kubectl expose deployment webapp-deployment --name=web-app-service --type=LoadBalancer --port 80 --target-port 8081'
 			sh 'sleep 120'
 			}
 		}
@@ -97,7 +91,7 @@ pipeline {
 		
 		stage ('Delete the GKE Cluster ENV'){
 			steps {
-			sh 'gcloud container clusters delete nasa-01  --zone "us-central1-c" --quiet'
+			sh 'gcloud container clusters delete gcp-grp-cluster01  --zone "us-central1-c" --quiet'
 			sh 'sleep 10'
 			}
 		}
