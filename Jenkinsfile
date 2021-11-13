@@ -38,8 +38,8 @@ pipeline {
 				--machine-type "g1-small" --image-type "COS_CONTAINERD" --disk-type "pd-standard"  \
 				--disk-size "100" --metadata disable-legacy-endpoints=true \
 				--max-pods-per-node "10" --num-nodes "1" --enable-ip-alias \
-				--network "projects/midevops/global/networks/default" \
-				--subnetwork "projects/midevops/regions/us-central1/subnetworks/default" \
+				--network "projects/midevops/global/networks/gcp-grp-cluster01-vpc" \
+				--subnetwork "projects/midevops/regions/us-central1/subnetworks/gcp-grp-cluster01-vpc" \
 				--no-enable-intra-node-visibility --default-max-pods-per-node "110" \
 				--no-enable-master-authorized-networks --addons HorizontalPodAutoscaling,HttpLoadBalancing \
 				--no-enable-autoupgrade --no-enable-autorepair --max-surge-upgrade 1 \
