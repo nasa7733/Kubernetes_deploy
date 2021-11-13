@@ -49,7 +49,7 @@ pipeline {
 		stage ('Check GKE Connection') {
 			steps {
 			sh 'gcloud container clusters get-credentials gcp-grp-cluster01  --zone "us-central1-c" '
-			sh 'sleep 120'
+			sh 'sleep 1'
 			}
 		}
 		stage ('Create a Deployment') {
@@ -69,7 +69,7 @@ pipeline {
 		stage ('Exposing the App') {
 			steps {
 			sh 'kubectl expose deployment webapp-deployment --name=web-app-service --type=LoadBalancer --port 80 --target-port 8081'
-			sh 'sleep 120'
+			sh 'sleep 10'
 			}
 		}
 		stage ('Get service details'){
@@ -91,6 +91,7 @@ pipeline {
 		
 		stage ('Delete the GKE Cluster ENV'){
 			steps {
+			sh 'sleep 600'
 			sh 'gcloud container clusters delete gcp-grp-cluster01  --zone "us-central1-c" --quiet'
 			sh 'sleep 10'
 			}
