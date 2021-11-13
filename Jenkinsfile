@@ -20,12 +20,7 @@ pipeline {
 	    	}
 		} 	
 		
-		stage ('Node Pool creation') {
-			steps {
-			sh 'gcloud container node-pools create gcp-grp-cluster01-pool  --cluster gcp-grp-cluster01 --zone "us-central1-c"'
-			sh 'sleep 100'
-			sh 'gcloud container node-pools list --cluster gcp-grp-cluster01 --zone "us-central1-c"' 
-			}
+		
 		}
 		stage ('Check GKE Connection') {
 			steps {
