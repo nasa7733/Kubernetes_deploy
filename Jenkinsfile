@@ -54,7 +54,7 @@ pipeline {
 		}
 		stage ('Create a Deployment') {
 			steps {
-			sh 'kubectl apply -f ./deploy.yaml'
+			sh 'kubectl apply -f /.../deploy.yaml'
 			sh 'sleep 120'
 			}
 		}
