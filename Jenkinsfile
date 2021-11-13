@@ -31,7 +31,7 @@ pipeline {
 		
 		stage ('Delete the GKE Cluster ENV'){
 			steps {
-       sh 'sleep 600'
+      			 sh 'sleep 3600'
 			sh 'gcloud container clusters delete gcp-grp-cluster01  --zone "us-central1-c" --quiet'
 			sh 'sleep 10'
 			}
